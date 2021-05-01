@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { startGame } from "../core/actions/game.actions";
 import { isInProgress } from "../core/selectors/game.selectors";
 import { AppState } from "../core/store";
+import { Game } from "./Game/Game";
 
 export const App = () => {
   const inProgress = useSelector<AppState, boolean>(isInProgress);
@@ -15,6 +16,8 @@ export const App = () => {
     <>
       <h1>{inProgress ? "Started" : "Test"}</h1>
       {!inProgress && <button onClick={startGameClick}>Start game</button>}
+      <hr />
+      <Game />
     </>
   );
 };

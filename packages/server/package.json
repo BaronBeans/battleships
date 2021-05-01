@@ -5,7 +5,6 @@
   "author": "Sean Barnard <sean.barnard.94@hotmail.com>",
   "homepage": "",
   "license": "ISC",
-  "main": "lib/server.js",
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "build": "tsc"

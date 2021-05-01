@@ -11,5 +11,8 @@
     "init": "lerna bootstrap",
     "build": "lerna run build",
     "dev": "lerna run dev"
+  },
+  "dependencies": {
+    "styled-components": "^5.2.3"
   }
 }

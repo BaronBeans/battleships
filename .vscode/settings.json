@@ -1,0 +1,4 @@
+{
+    "liveServer.settings.multiRootWorkspaceName": "battleships",
+    "liveServer.settings.root": "packages/client/dist"
+}

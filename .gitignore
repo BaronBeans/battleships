@@ -2,3 +2,4 @@ node_modules
 packages/client/.parcel-cache
 packages/client/dist
 packages/server/dist
+.env
