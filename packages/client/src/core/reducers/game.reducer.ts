@@ -1,4 +1,4 @@
-import { START_GAME } from "../actions/game.actions";
+import { END_GAME, START_GAME } from "../actions/game.actions";
 import { GameState } from "../store/game.store";
 
 const initialState: GameState = {
@@ -11,6 +11,11 @@ export const gameReducer = (state: GameState = initialState, action: any) => {
       return {
         ...state,
         inProgress: true,
+      };
+    case END_GAME:
+      return {
+        ...state,
+        inProgress: false,
       };
     default:
       return state;

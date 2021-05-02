@@ -12,12 +12,14 @@ export const App = () => {
   const startGameClick = (e: React.MouseEvent<HTMLInputElement>) => {
     dispatch(startGame());
   };
+
+  if (inProgress) {
+    return <Game />;
+  }
+
   return (
     <>
-      <h1>{inProgress ? "Started" : "Test"}</h1>
-      {!inProgress && <button onClick={startGameClick}>Start game</button>}
-      <hr />
-      <Game />
+      <button onClick={startGameClick}>Start game</button>
     </>
   );
 };
