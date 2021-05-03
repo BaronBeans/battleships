@@ -1,8 +1,10 @@
 import { END_GAME, START_GAME } from "../actions/game.actions";
-import { GameState } from "../store/game.store";
+import { Game, GameState } from "../store/game.store";
 
 const initialState: GameState = {
   inProgress: false,
+  currentTurn: "p",
+  gameState: {} as Game,
 };
 
 export const gameReducer = (state: GameState = initialState, action: any) => {
