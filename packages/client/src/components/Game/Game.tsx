@@ -1,28 +1,25 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { endGame } from "../../core/actions/game.actions";
 import { Board } from "./Board";
+import { GameControls } from "./GameControls";
 
-const GameContainer = styled.div`
+const Container = styled.div`
   padding: 1rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Game = () => {
-  const dispatch = useDispatch();
-
-  const endGameClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    dispatch(endGame());
-  };
   return (
     <>
-      <button onClick={endGameClick}>End Game</button>
-      <GameContainer>
+      <GameControls />
+      <Container>
         <Board visible={false} />
-      </GameContainer>
-      <GameContainer>
+      </Container>
+      <Container>
         <Board visible={true} />
-      </GameContainer>
+      </Container>
     </>
   );
 };

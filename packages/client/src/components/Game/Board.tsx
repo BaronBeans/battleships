@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { MouseEvent, useState } from "react";
 import styled from "styled-components";
 
 const Grid = styled.div`
@@ -13,6 +13,13 @@ const GridItem = styled.div`
   border: 1px solid black;
   display: flex;
   background-color: ${(props) => (props.background ? "black" : "")};
+
+  button {
+    color: none;
+    border: none;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export interface BoardProps {
@@ -23,21 +30,29 @@ export const Board = ({ visible }: BoardProps) => {
   const [config, setConfig] = useState([
     [
       { l: "a", n: 1, v: 0 },
-      { l: "a", n: 1, v: 0 },
-      { l: "a", n: 1, v: 0 },
+      { l: "b", n: 1, v: 0 },
+      { l: "c", n: 1, v: 0 },
     ],
     [
-      { l: "a", n: 1, v: 0 },
-      { l: "a", n: 1, v: 1 },
-      { l: "a", n: 1, v: 0 },
+      { l: "a", n: 2, v: 0 },
+      { l: "b", n: 2, v: 1 },
+      { l: "c", n: 2, v: 0 },
     ],
     [
-      { l: "a", n: 1, v: 0 },
-      { l: "a", n: 1, v: 0 },
-      { l: "a", n: 1, v: 0 },
+      { l: "a", n: 3, v: 0 },
+      { l: "b", n: 3, v: 0 },
+      { l: "c", n: 3, v: 0 },
     ],
   ]);
   const labelPrefix = visible ? "p" : "o";
+  const clickSquare = (e: MouseEvent) => {
+    // console.log(JSON.parse(e.target.dataset.itemstring).v);
+    if (JSON.parse(e.target.dataset.itemstring).v === 1) {
+      console.log("HIT");
+    } else {
+      console.log("MISS");
+    }
+  };
   return (
     <Grid>
       {config.map((row) =>
@@ -46,7 +61,12 @@ export const Board = ({ visible }: BoardProps) => {
             <GridItem
               background={visible && item.v}
               key={config.flat().indexOf(item)}
-            />
+              data-itemstring={JSON.stringify(item)}
+              data-item={item}
+              onClick={clickSquare}
+            >
+              {/* <button onClick={clickSquare}></button> */}
+            </GridItem>
           );
         })
       )}

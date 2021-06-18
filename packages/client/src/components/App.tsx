@@ -1,25 +1,16 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { startGame } from "../core/actions/game.actions";
+import { useSelector } from "react-redux";
 import { isInProgress } from "../core/selectors/game.selectors";
 import { AppState } from "../core/store";
+import { StartPage } from "./App/StartPage";
 import { Game } from "./Game/Game";
 
 export const App = () => {
   const inProgress = useSelector<AppState, boolean>(isInProgress);
-  const dispatch = useDispatch();
-
-  const startGameClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    dispatch(startGame());
-  };
 
   if (inProgress) {
     return <Game />;
   }
 
-  return (
-    <>
-      <button onClick={startGameClick}>Start game</button>
-    </>
-  );
+  return <StartPage />;
 };
