@@ -10,7 +10,7 @@
 
 <body>
 	<div id="root"></div>
-	<script type="module" src="../src/index.tsx"></script>
+	<script type="module" src="d3e8fe141e0663d50ebf6a9fa74648d2"></script>
 </body>
 
 </html>
