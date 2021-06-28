@@ -1,5 +1,9 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { getGameRef, isInProgress } from "../core/selectors/game.selectors";
+import { AppState } from "../core/store";
+import { endGame, startGame } from "../core/actions/game.actions";
 
 const AppContainer = styled.div`
   display: flex;
@@ -21,18 +25,26 @@ const AppContainer = styled.div`
 
 export const App = () => {
   const [name, setName] = useState<string>("");
+  const inProgress = useSelector<AppState, boolean>(isInProgress);
+  const gameRef = useSelector<AppState, string>(getGameRef);
+  const dispatch = useDispatch();
 
   const createGame = async () => {
     if (!name) return;
-    // const response = await fetch(
-    //   "https://us-central1-battleships-cfcc6.cloudfunctions.net/createGame?" +
-    //     name,
-    //   {
-    //     headers: [["Access-Control-Allow-Origin", "true"]],
-    //   }
-    // );
-    // console.log(response);
+    dispatch(startGame(name));
   };
+  const destroyGame = async () => {
+    dispatch(endGame(gameRef));
+  };
+
+  if (inProgress) {
+    return (
+      <AppContainer>
+        <h1>Test</h1>
+        <button onClick={destroyGame}>End Game</button>
+      </AppContainer>
+    );
+  }
 
   return (
     <AppContainer>
