@@ -24,14 +24,14 @@ export const App = () => {
 
   const createGame = async () => {
     if (!name) return;
-    const response = await fetch(
-      "https://us-central1-battleships-cfcc6.cloudfunctions.net/createGame?" +
-        name,
-      {
-        headers: [["Access-Control-Allow-Origin", "true"]],
-      }
-    );
-    console.log(response);
+    // const response = await fetch(
+    //   "https://us-central1-battleships-cfcc6.cloudfunctions.net/createGame?" +
+    //     name,
+    //   {
+    //     headers: [["Access-Control-Allow-Origin", "true"]],
+    //   }
+    // );
+    // console.log(response);
   };
 
   return (
