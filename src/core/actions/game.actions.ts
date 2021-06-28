@@ -1,6 +1,7 @@
 export const START_GAME = "START_GAME";
 export const SET_GAME_REF = "SET_GAME_REF";
 export const END_GAME = "END_GAME";
+export const GAME_ENDED = "GAME_ENDED";
 
 export const startGame = (name: string) => ({
   type: START_GAME,
@@ -15,4 +16,8 @@ export const setGameRef = (ref: string) => ({
 export const endGame = (ref: string) => ({
   type: END_GAME,
   payload: ref,
+});
+
+export const gameEnded = () => ({
+  type: GAME_ENDED,
 });

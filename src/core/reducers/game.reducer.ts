@@ -1,5 +1,10 @@
 import { GameState } from "../../types/game.types";
-import { END_GAME, SET_GAME_REF, START_GAME } from "../actions/game.actions";
+import {
+  END_GAME,
+  GAME_ENDED,
+  SET_GAME_REF,
+  START_GAME,
+} from "../actions/game.actions";
 
 export const initialGameState: GameState = {
   inProgress: false,
@@ -22,6 +27,11 @@ export const gameReducer = (
         gameRef: action.payload,
       };
     case END_GAME:
+      return {
+        ...state,
+        inProgress: false,
+      };
+    case GAME_ENDED:
       return {
         inProgress: false,
       };

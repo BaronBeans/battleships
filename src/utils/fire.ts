@@ -13,9 +13,11 @@ export const config = {
 
 const fire = firebase.initializeApp(config);
 export const db = fire.firestore();
-if (location.hostname === "localhost") {
-  db.useEmulator("localhost", 8080);
-}
+// // local test
+// if (location.hostname === "localhost") {
+//   db.useEmulator("localhost", 8080);
+// }
+// //
 db.enablePersistence().catch((err) => {
   if (err.code === "unimplemented") {
     console.log(`Persistence is not supported in the current browser.`);
