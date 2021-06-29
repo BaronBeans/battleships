@@ -17,7 +17,12 @@ const addGameToDB = async (player1Name: string) => {
   });
 };
 
-const removeGameFromDB = async (ref: string, game: GameState) => {
+const getGameFromDB = async (ref: string) => {
+  return await (await db.collection("games").doc(ref).get()).data();
+};
+
+const removeGameFromDB = async (ref: string, game: any) => {
+  game.inProgress = false;
   return await db
     .collection("games")
     .doc(ref)
@@ -33,7 +38,8 @@ export function* startNewGame({ payload }) {
 }
 
 export function* endGame({ payload }) {
-  const game = yield select(getGame);
+  // const game = yield select(getGame);
+  const game = yield call(getGameFromDB, payload);
   const result = yield call(removeGameFromDB, payload, game);
   console.log(result);
   yield put(gameEnded());

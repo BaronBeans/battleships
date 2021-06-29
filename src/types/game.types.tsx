@@ -1,4 +1,14 @@
 export interface GameState {
-  inProgress: boolean;
+  state: GameStates;
   gameRef?: string;
+}
+
+export enum GameStates {
+  NOT_STARTED,
+  STARTING,
+  JOINING,
+  STARTED,
+  JOINED,
+  ENDING,
+  ENDED,
 }

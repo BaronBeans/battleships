@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel serve public/index.html",
     "build": "parcel build public/index.html",
-    "start-emulators": "firebase emulators:start"
+    "start-emulators": "firebase emulators:start",
+    "cy:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,7 @@
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
     "@types/styled-components": "^5.1.10",
+    "cypress": "^7.6.0",
     "parcel": "^2.0.0-beta.3.1"
   },
   "dependencies": {

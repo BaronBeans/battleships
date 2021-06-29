@@ -3,7 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { getGameRef, isInProgress } from "../core/selectors/game.selectors";
 import { AppState } from "../core/store";
-import { endGame, startGame } from "../core/actions/game.actions";
+import {
+  endGame,
+  joinInProgressGame,
+  startGame,
+} from "../core/actions/game.actions";
+import { Game } from "../components/Game/Game";
 
 const AppContainer = styled.div`
   display: flex;
@@ -25,23 +30,27 @@ const AppContainer = styled.div`
 
 export const App = () => {
   const [name, setName] = useState<string>("");
+  const [code, setCode] = useState<string>("");
   const inProgress = useSelector<AppState, boolean>(isInProgress);
-  const gameRef = useSelector<AppState, string>(getGameRef);
+  const loading = useSelector<AppState, boolean>(isInProgress);
   const dispatch = useDispatch();
 
   const createGame = async () => {
     if (!name) return;
     dispatch(startGame(name));
   };
-  const destroyGame = async () => {
-    dispatch(endGame(gameRef));
+
+  const joinGame = async () => {
+    if (!code) return;
+    dispatch(joinInProgressGame(code));
   };
+
+  // if (loading) return <h1>Loading...</h1>;
 
   if (inProgress) {
     return (
       <AppContainer>
-        <h1>Test</h1>
-        <button onClick={destroyGame}>End Game</button>
+        <Game />
       </AppContainer>
     );
   }
@@ -53,6 +62,7 @@ export const App = () => {
         <legend>Create Game</legend>
         <input
           placeholder="name"
+          type="text"
           value={name}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setName(e.target.value)
@@ -63,8 +73,15 @@ export const App = () => {
       </fieldset>
       <fieldset>
         <legend>Join Game</legend>
-        <input placeholder="game code" type="text" />
-        <button>Join Game</button>
+        <input
+          placeholder="game code"
+          type="text"
+          value={code}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setCode(e.target.value)
+          }
+        />
+        <button onClick={joinGame}>Join Game</button>
       </fieldset>
     </AppContainer>
   );
