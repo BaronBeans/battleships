@@ -1,13 +1,9 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { getGameRef, isInProgress } from "../core/selectors/game.selectors";
+import { joinInProgressGame, startGame } from "../core/actions/game.actions";
+import { isInProgress, isLoading } from "../core/selectors/game.selectors";
 import { AppState } from "../core/store";
-import {
-  endGame,
-  joinInProgressGame,
-  startGame,
-} from "../core/actions/game.actions";
 import { Game } from "../components/Game/Game";
 
 const AppContainer = styled.div`
@@ -32,7 +28,7 @@ export const App = () => {
   const [name, setName] = useState<string>("");
   const [code, setCode] = useState<string>("");
   const inProgress = useSelector<AppState, boolean>(isInProgress);
-  const loading = useSelector<AppState, boolean>(isInProgress);
+  const loading = useSelector<AppState, boolean>(isLoading);
   const dispatch = useDispatch();
 
   const createGame = async () => {
@@ -45,7 +41,9 @@ export const App = () => {
     dispatch(joinInProgressGame(code));
   };
 
-  // if (loading) return <h1>Loading...</h1>;
+  // return <SetupBoard />;
+
+  if (loading) return <h1>Loading...</h1>;
 
   if (inProgress) {
     return (
