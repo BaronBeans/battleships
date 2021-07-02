@@ -8,6 +8,8 @@ import { GridObject } from "./components/Game/Grid";
 render(
   <Provider store={store}>
     <GridObject />
+    <hr />
+    <GridObject />
   </Provider>,
   document.getElementById("root")
 );

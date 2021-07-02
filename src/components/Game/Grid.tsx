@@ -37,14 +37,6 @@ const GridContainer = styled.div`
   }
 `;
 
-// const Row = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-evenly;
-//   text-align: center;
-//   justify-items: center;
-// `;
-
 export const GridObject = () => {
   return (
     <GridContainer>
