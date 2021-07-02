@@ -15,10 +15,10 @@ export const Game = () => {
     <>
       <GameControls />
       <Container>
-        <Board visible={false} />
+        <Board />
       </Container>
       <Container>
-        <Board visible={true} />
+        <Board />
       </Container>
     </>
   );

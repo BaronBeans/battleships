@@ -41,8 +41,6 @@ export const App = () => {
     dispatch(joinInProgressGame(code));
   };
 
-  // return <SetupBoard />;
-
   if (loading) return <h1>Loading...</h1>;
 
   if (inProgress) {
