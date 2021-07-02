@@ -10,8 +10,8 @@ const GridContainer = styled.div`
 
   td {
     position: relative;
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
     border: 2px solid #152c59;
     border-radius: 15px;
   }
@@ -21,8 +21,8 @@ const GridContainer = styled.div`
   }
 
   td div {
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
   }
 
   .numbers,
@@ -31,8 +31,8 @@ const GridContainer = styled.div`
     font-size: 20px;
     font-family: "Baloo Bhaina";
     color: black;
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
     border: none;
   }
 `;
