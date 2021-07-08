@@ -26,7 +26,7 @@ const Container = styled.div`
   }
 `;
 
-const LabelGroup = styled.div`
+const LabelGroup = styled.div<{ direction: "row" | "column" }>`
   display: flex;
   flex-direction: ${(props) => props.direction};
   justify-content: space-evenly;
@@ -71,7 +71,7 @@ export const Board = () => {
           <p>J</p>
         </LabelGroup>
         <div className="grid">
-          <GridObject hits={hits} misses={misses} />
+          <GridObject />
         </div>
       </Container>
       <hr />

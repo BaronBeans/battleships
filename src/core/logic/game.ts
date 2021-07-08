@@ -28,4 +28,7 @@ export class Game {
   checkedCells() {
     return this._checkedCells;
   }
+  getShips() {
+    return this._board.getShipsPoints();
+  }
 }

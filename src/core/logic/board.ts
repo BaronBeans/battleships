@@ -36,4 +36,7 @@ export class Board {
       misses: this._misses,
     };
   }
+  getShipsPoints() {
+    return this._ships.map((s) => s.calculatePoints());
+  }
 }

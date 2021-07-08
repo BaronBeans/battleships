@@ -19,8 +19,8 @@ describe("Board logic tests", () => {
 
   it("can get a SUNK from one of it's ships", () => {
     const board = new Board([ship3]);
-    expect(board.checkPointWithShips({ x: 0, y: 0 })).toBe("H");
-    expect(board.checkPointWithShips({ x: 1, y: 0 })).toBe("H");
-    expect(board.checkPointWithShips({ x: 2, y: 0 })).toBe("S");
+    expect(board.checkPointWithShips({ x: 8, y: 10 })).toBe("H");
+    expect(board.checkPointWithShips({ x: 9, y: 10 })).toBe("H");
+    expect(board.checkPointWithShips({ x: 10, y: 10 })).toBe("S");
   });
 });

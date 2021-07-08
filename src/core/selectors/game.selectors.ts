@@ -13,7 +13,5 @@ export const getGameRef = (state: HasGameState): string => state.game.gameRef;
 export const getGame = (state: HasGameState): GameState => state.game;
 export const getCheckedCells = (state: HasGameState): HitsAndMisses =>
   state.game.game._checkedCells;
-export const isCellHit = (cell: Coordinate) => (state: HasGameState) =>
-  state.game.game._checkedCells.hits.includes(cell);
-export const isCellMissed = (cell: Coordinate) => (state: HasGameState) =>
-  state.game.game._checkedCells.misses.includes(cell);
+export const getShipsCells = (state: HasGameState): Coordinate[][] =>
+  state.game.game.getShips();
