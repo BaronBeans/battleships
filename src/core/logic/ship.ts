@@ -35,7 +35,10 @@ export class Ship {
     if (points.find((p) => p.x === queryPoint.x && p.y === queryPoint.y)) {
       // HIT:
       this.hit(queryPoint);
-      if (this._pointsHit.length === this._length) return "S";
+      if (this._pointsHit.length === this._length) {
+        this._sunk = true;
+        return "S";
+      }
 
       return "H";
     }

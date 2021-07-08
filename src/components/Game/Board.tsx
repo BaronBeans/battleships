@@ -1,84 +1,92 @@
 import React from "react";
+import styled from "styled-components";
+import { GridObject } from "./Grid";
+import { useSelector } from "react-redux";
+import { AppState } from "../../core/store/index";
+import { HitsAndMisses } from "../../types/game.types";
+import { getCheckedCells } from "../../core/selectors/game.selectors";
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
+  justify-content: center;
+
+  .header {
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
+  }
+  .side {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+  }
+  .grid {
+    grid-row: 2 / 3;
+    grid-column: 2 / 3;
+  }
+`;
+
+const LabelGroup = styled.div`
+  display: flex;
+  flex-direction: ${(props) => props.direction};
+  justify-content: space-evenly;
+  margin: 0.2rem;
+
+  p {
+    margin: auto;
+    padding: auto;
+    font-family: "Lato", sans-serif;
+  }
+`;
 
 export const Board = () => {
+  const { hits, misses } = useSelector<AppState, HitsAndMisses>(
+    getCheckedCells
+  );
   return (
-    <div>
-      <h1>Board</h1>
-    </div>
+    <>
+      <Container>
+        <LabelGroup className="header" direction="row">
+          <p>1</p>
+          <p>2</p>
+          <p>3</p>
+          <p>4</p>
+          <p>5</p>
+          <p>6</p>
+          <p>7</p>
+          <p>8</p>
+          <p>9</p>
+          <p>10</p>
+        </LabelGroup>
+        <LabelGroup className="side" direction="column">
+          <p>A</p>
+          <p>B</p>
+          <p>C</p>
+          <p>D</p>
+          <p>E</p>
+          <p>F</p>
+          <p>G</p>
+          <p>H</p>
+          <p>I</p>
+          <p>J</p>
+        </LabelGroup>
+        <div className="grid">
+          <GridObject hits={hits} misses={misses} />
+        </div>
+      </Container>
+      <hr />
+      <p>Hits:</p>
+      <ul>
+        {hits.map((h) => (
+          <li key={JSON.stringify(h)}>{JSON.stringify(h)}</li>
+        ))}
+      </ul>
+      <p>Misses:</p>
+      <ul>
+        {misses.map((m) => (
+          <li key={JSON.stringify(m)}>{JSON.stringify(m)}</li>
+        ))}
+      </ul>
+    </>
   );
 };
-
-// import React, { MouseEvent, useState } from "react";
-// import styled from "styled-components";
-
-// const Grid = styled.div`
-//   display: grid;
-//   grid-template-columns: repeat(3, auto);
-//   grid-template-rows: repeat(3, auto);
-//   height: 300px;
-//   width: 300px;
-// `;
-
-// const GridItem = styled.div`
-//   border: 1px solid black;
-//   display: flex;
-
-//   button {
-//     color: none;
-//     border: none;
-//     width: 100%;
-//     height: 100%;
-//   }
-// `;
-
-// export interface BoardProps {
-//   visible: boolean;
-// }
-
-// export const Board = ({ visible }: BoardProps) => {
-//   const [config, setConfig] = useState([
-//     [
-//       { l: "a", n: 1, v: 0 },
-//       { l: "b", n: 1, v: 0 },
-//       { l: "c", n: 1, v: 0 },
-//     ],
-//     [
-//       { l: "a", n: 2, v: 0 },
-//       { l: "b", n: 2, v: 1 },
-//       { l: "c", n: 2, v: 0 },
-//     ],
-//     [
-//       { l: "a", n: 3, v: 0 },
-//       { l: "b", n: 3, v: 0 },
-//       { l: "c", n: 3, v: 0 },
-//     ],
-//   ]);
-//   const labelPrefix = visible ? "p" : "o";
-//   const clickSquare = (e: MouseEvent) => {
-//     // console.log(JSON.parse(e.target.dataset.itemstring).v);
-//     if (JSON.parse(e.target.dataset.itemstring).v === 1) {
-//       console.log("HIT");
-//     } else {
-//       console.log("MISS");
-//     }
-//   };
-//   return (
-//     <Grid>
-//       {config.map((row) =>
-//         row.map((item) => {
-//           return (
-//             <GridItem
-//               // background={visible && item.v}
-//               key={config.flat().indexOf(item)}
-//               data-itemstring={JSON.stringify(item)}
-//               data-item={item}
-//               onClick={clickSquare}
-//             >
-//               {/* <button onClick={clickSquare}></button> */}
-//             </GridItem>
-//           );
-//         })
-//       )}
-//     </Grid>
-//   );
-// };

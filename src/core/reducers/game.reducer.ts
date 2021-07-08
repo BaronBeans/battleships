@@ -1,14 +1,17 @@
 import { GameState, GameStates } from "../../types/game.types";
 import {
+  CHECK_CELL,
   END_GAME,
   GAME_ENDED,
   JOIN_GAME,
   SET_GAME_REF,
   START_GAME,
 } from "../actions/game.actions";
+import { game1 } from "../logic/testHelpers";
 
 export const initialGameState: GameState = {
   state: GameStates.NOT_STARTED,
+  game: game1,
 };
 
 export const gameReducer = (
@@ -43,6 +46,9 @@ export const gameReducer = (
       return {
         state: GameStates.ENDED,
       };
+    case CHECK_CELL:
+      state.game.checkCell(action.payload);
+      return state;
     default:
       return state;
   }

@@ -1,15 +1,12 @@
 import React from "react";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { App } from "./components/App";
+import { Board } from "./components/Game/Board";
 import store from "./core/store";
-import { GridObject } from "./components/Game/Grid";
 
 render(
   <Provider store={store}>
-    <GridObject />
-    <hr />
-    <GridObject />
+    <Board />
   </Provider>,
   document.getElementById("root")
 );

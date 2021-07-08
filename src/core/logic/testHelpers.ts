@@ -10,6 +10,8 @@
 //   ],
 // };
 
+import { Board } from "./board";
+import { Game } from "./game";
 import { Ship } from "./ship";
 import { Orientation } from "./types";
 
@@ -25,4 +27,8 @@ import { Orientation } from "./types";
 
 export const ship1 = new Ship({ x: 1, y: 1 }, 3, Orientation.VERTICAL);
 export const ship2 = new Ship({ x: 3, y: 2 }, 5, Orientation.VERTICAL);
-export const ship3 = new Ship({ x: 0, y: 0 }, 3, Orientation.HORIZONTAL);
+export const ship3 = new Ship({ x: 8, y: 10 }, 3, Orientation.HORIZONTAL);
+
+export const board1 = new Board([ship1, ship2, ship3]);
+
+export const game1 = new Game("Sean", board1);
