@@ -36,7 +36,7 @@ export const Cell = ({ row, column, hit, miss, own }: CellProps) => {
   const dispatch = useDispatch();
   const buttonClick = (e: React.MouseEvent<HTMLInputElement>) => {
     if (hit || miss) return;
-    console.log(`${row},${column}`);
+    // console.log(`${row},${column}`);
     dispatch(checkCell({ x: row, y: column }));
   };
 

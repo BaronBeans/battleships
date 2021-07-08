@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "redux-saga/effects";
 import { db } from "../../utils/fire";
 import { exampleBoard, generateRandomBoard } from "../../utils/game.utils";
 import {
@@ -8,13 +8,15 @@ import {
   setGameRef,
   START_GAME,
 } from "../actions/game.actions";
+import { Game } from "../logic/game";
+import { getGame } from "../selectors/game.selectors";
 
-const addGameToDB = async (player1Name: string) => {
+const addGameToDB = async (player1Name: string, game?: Game) => {
   return await db.collection("games").add({
     inProgress: true,
     started: new Date(),
     player1Name,
-    board: exampleBoard,
+    board: game || "",
   });
 };
 
@@ -35,6 +37,8 @@ const removeGameFromDB = async (ref: string, game: any) => {
 };
 
 export function* startNewGame({ payload }) {
+  const game = yield select(getGame);
+  console.log(game);
   const gameRef = yield call(addGameToDB, payload);
   console.log(gameRef);
   yield put(setGameRef(gameRef.id));

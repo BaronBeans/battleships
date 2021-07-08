@@ -17,7 +17,11 @@ const Container = styled.div`
   grid-template-columns: repeat(10, 2rem);
 `;
 
-export const GridObject = () => {
+export interface GridProps {
+  own: boolean;
+}
+
+export const GridObject = ({ own }: GridProps) => {
   const { hits, misses } = useSelector<AppState, HitsAndMisses>(
     getCheckedCells
   );
@@ -30,10 +34,6 @@ export const GridObject = () => {
       let children = [];
       //Inner loop to create cells
       for (let j = 1; j < 11; j++) {
-        if (i === 1 && j === 1) {
-          console.log(`${JSON.stringify(hits)}`);
-          console.log(`${JSON.stringify(misses)}`);
-        }
         children.push(
           <Cell
             row={i}
@@ -41,7 +41,7 @@ export const GridObject = () => {
             key={`${i},${j}`}
             hit={hits.some((h) => h.x === i && h.y === j)}
             miss={misses.some((m) => m.x === i && m.y === j)}
-            own={ownCells.flat().some((s) => s.x === i && s.y === j)}
+            own={own && ownCells.flat().some((s) => s.x === i && s.y === j)}
           />
         );
       }

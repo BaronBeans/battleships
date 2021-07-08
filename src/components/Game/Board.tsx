@@ -39,7 +39,11 @@ const LabelGroup = styled.div<{ direction: "row" | "column" }>`
   }
 `;
 
-export const Board = () => {
+export interface BoardProps {
+  own: boolean;
+}
+
+export const Board = ({ own }: BoardProps) => {
   const { hits, misses } = useSelector<AppState, HitsAndMisses>(
     getCheckedCells
   );
@@ -71,11 +75,11 @@ export const Board = () => {
           <p>J</p>
         </LabelGroup>
         <div className="grid">
-          <GridObject />
+          <GridObject own={own} />
         </div>
       </Container>
-      <hr />
-      <p>Hits:</p>
+      {/* <hr />
+       <p>Hits:</p>
       <ul>
         {hits.map((h) => (
           <li key={JSON.stringify(h)}>{JSON.stringify(h)}</li>
@@ -86,7 +90,7 @@ export const Board = () => {
         {misses.map((m) => (
           <li key={JSON.stringify(m)}>{JSON.stringify(m)}</li>
         ))}
-      </ul>
+      </ul> */}
     </>
   );
 };
