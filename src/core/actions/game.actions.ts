@@ -1,5 +1,6 @@
 import { Board } from "../logic/board";
 import { Game } from "../logic/game";
+import firebase from "firebase";
 
 export const ADD_PLAYER = "ADD_PLAYER";
 export const ADD_PLAYER_2 = "ADD_PLAYER_2";
@@ -7,10 +8,10 @@ export const ADD_GAME = "ADD_GAME";
 export const JOIN_GAME = "JOIN_GAME";
 export const OVERWRITE_GAME = "OVERWRITE_GAME";
 
-export const addPlayerToGame = (name: string, board: Board) => ({
+export const addPlayerToGame = (user: firebase.User, board: Board) => ({
   type: ADD_PLAYER,
   payload: {
-    name,
+    user,
     board,
   },
 });

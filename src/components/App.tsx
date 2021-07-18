@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { auth } from "../utils/fire";
 import { Login } from "./Login";
 import firebase from "firebase";
+import { GamesList } from "./GamesList";
+import { useDispatch } from "react-redux";
+import { addPlayerToGame } from "../core/actions/game.actions";
 
 const AppContainer = styled.div`
   display: flex;
@@ -25,6 +28,12 @@ const AppContainer = styled.div`
 export const App = () => {
   const [user, setUser] = React.useState<firebase.User>(auth.currentUser);
   const [loading, setLoading] = React.useState(true);
+  const dispatch = useDispatch();
+
+  const createGame = async () => {
+    if (!user) return;
+    console.log(user);
+  };
 
   React.useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
@@ -52,6 +61,8 @@ export const App = () => {
       <div>
         <h1>{user.displayName}</h1>
         <button onClick={() => auth.signOut()}>Sign out</button>
+        <button onClick={createGame}>Start game</button>
+        <GamesList />
       </div>
     );
 
@@ -133,3 +144,12 @@ export const App = () => {
   //   </AppContainer>
   // );
 };
+function board1(
+  name: void,
+  board1: any
+): {
+  type: string;
+  payload: { name: string; board: import("../core/logic/board").Board };
+} {
+  throw new Error("Function not implemented.");
+}

@@ -7,7 +7,7 @@ export const gameReducer = (state: Game = initialGameState, action: any) => {
   switch (action.type) {
     case ADD_PLAYER:
       const newState = state.addPlayer(
-        action.payload.name,
+        action.payload.user,
         action.payload.board
       );
       return newState;
