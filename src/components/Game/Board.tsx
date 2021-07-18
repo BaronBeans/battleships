@@ -4,7 +4,10 @@ import { GridObject } from "./Grid";
 import { useSelector } from "react-redux";
 import { AppState } from "../../core/store/index";
 import { HitsAndMisses } from "../../types/game.types";
-import { getCheckedCells } from "../../core/selectors/game.selectors";
+import {
+  player1HitsAndMisses,
+  player2HitsAndMisses,
+} from "../../core/selectors/game.selectors";
 
 const Container = styled.div`
   display: grid;
@@ -45,7 +48,7 @@ export interface BoardProps {
 
 export const Board = ({ own }: BoardProps) => {
   const { hits, misses } = useSelector<AppState, HitsAndMisses>(
-    getCheckedCells
+    own ? player1HitsAndMisses : player2HitsAndMisses
   );
   return (
     <>
@@ -78,8 +81,8 @@ export const Board = ({ own }: BoardProps) => {
           <GridObject own={own} />
         </div>
       </Container>
-      {/* <hr />
-       <p>Hits:</p>
+      <hr />
+      <p>Hits:</p>
       <ul>
         {hits.map((h) => (
           <li key={JSON.stringify(h)}>{JSON.stringify(h)}</li>
@@ -90,7 +93,7 @@ export const Board = ({ own }: BoardProps) => {
         {misses.map((m) => (
           <li key={JSON.stringify(m)}>{JSON.stringify(m)}</li>
         ))}
-      </ul> */}
+      </ul>
     </>
   );
 };

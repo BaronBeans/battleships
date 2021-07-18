@@ -3,9 +3,9 @@ import { Ship } from "./ship";
 import { Coordinate } from "./types";
 
 export class Board {
-  private _ships: Ship[];
-  private _hits: Coordinate[];
-  private _misses: Coordinate[];
+  public _ships: Ship[];
+  public _hits: Coordinate[];
+  public _misses: Coordinate[];
 
   constructor(ships: Ship[]) {
     this._ships = ships;
@@ -36,7 +36,7 @@ export class Board {
       misses: this._misses,
     };
   }
-  getShipsPoints() {
+  getShipsPoints(): Coordinate[][] {
     return this._ships.map((s) => s.calculatePoints());
   }
 }

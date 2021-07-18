@@ -1,15 +1,16 @@
 import React from "react";
-import styled from "styled-components";
-import { Cell } from "./Cell";
-import { HitsAndMisses } from "../../types/game.types";
 import { useSelector } from "react-redux";
-import { AppState } from "../../core/store/index";
-import {
-  getCheckedCells,
-  getShipsCells,
-} from "../../core/selectors/game.selectors";
-import { App } from "../App";
+import styled from "styled-components";
 import { Coordinate } from "../../core/logic/types";
+import {
+  player1HitsAndMisses,
+  player1Ships,
+  player2HitsAndMisses,
+  player2Ships,
+} from "../../core/selectors/game.selectors";
+import { AppState } from "../../core/store/index";
+import { HitsAndMisses } from "../../types/game.types";
+import { Cell } from "./Cell";
 
 const Container = styled.div`
   display: grid;
@@ -23,9 +24,11 @@ export interface GridProps {
 
 export const GridObject = ({ own }: GridProps) => {
   const { hits, misses } = useSelector<AppState, HitsAndMisses>(
-    getCheckedCells
+    own ? player1HitsAndMisses : player2HitsAndMisses
   );
-  const ownCells = useSelector<AppState, Coordinate[][]>(getShipsCells);
+  const ownCells = useSelector<AppState, Coordinate[][]>(
+    own ? player1Ships : player2Ships
+  );
   const createGrid = () => {
     let grid = [];
 
@@ -41,7 +44,10 @@ export const GridObject = ({ own }: GridProps) => {
             key={`${i},${j}`}
             hit={hits.some((h) => h.x === i && h.y === j)}
             miss={misses.some((m) => m.x === i && m.y === j)}
-            own={own && ownCells.flat().some((s) => s.x === i && s.y === j)}
+            occupied={
+              own && ownCells.flat().some((s) => s.x === i && s.y === j)
+            }
+            own={own}
           />
         );
       }

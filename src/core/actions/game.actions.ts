@@ -1,36 +1,38 @@
-export const START_GAME = "START_GAME";
-import { Coordinate } from "../logic/types";
+import { Board } from "../logic/board";
+import { Game } from "../logic/game";
+
+export const ADD_PLAYER = "ADD_PLAYER";
+export const ADD_PLAYER_2 = "ADD_PLAYER_2";
+export const ADD_GAME = "ADD_GAME";
 export const JOIN_GAME = "JOIN_GAME";
-export const SET_GAME_REF = "SET_GAME_REF";
-export const END_GAME = "END_GAME";
-export const GAME_ENDED = "GAME_ENDED";
-export const CHECK_CELL = "CHECK_CELL";
+export const OVERWRITE_GAME = "OVERWRITE_GAME";
 
-export const startGame = (name: string) => ({
-  type: START_GAME,
-  payload: name,
+export const addPlayerToGame = (name: string, board: Board) => ({
+  type: ADD_PLAYER,
+  payload: {
+    name,
+    board,
+  },
 });
 
-export const joinInProgressGame = (code: string) => ({
+export const addGameToDatabase = () => ({
+  type: ADD_GAME,
+});
+
+export const joinGameInProgress = (
+  code: string,
+  name: string,
+  board: Board
+) => ({
   type: JOIN_GAME,
-  payload: code,
+  payload: {
+    code,
+    name,
+    board,
+  },
 });
 
-export const setGameRef = (ref: string) => ({
-  type: SET_GAME_REF,
-  payload: ref,
-});
-
-export const endGame = (ref: string) => ({
-  type: END_GAME,
-  payload: ref,
-});
-
-export const gameEnded = () => ({
-  type: GAME_ENDED,
-});
-
-export const checkCell = (coords: Coordinate) => ({
-  type: CHECK_CELL,
-  payload: coords,
+export const overwriteGame = (game: Game) => ({
+  type: OVERWRITE_GAME,
+  payload: game,
 });

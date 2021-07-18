@@ -1,18 +1,24 @@
-import { GameState, GameStates, HitsAndMisses } from "../../types/game.types";
-import { Game } from "../logic/game";
-import { Coordinate } from "../logic/types";
 type HasGameState = { game: GameState };
 
-export const isInProgress = (state: HasGameState): boolean =>
-  state.game.state === GameStates.STARTED ||
-  state.game.state === GameStates.JOINED;
-export const isLoading = (state: HasGameState): boolean =>
-  state.game.state === GameStates.STARTING ||
-  state.game.state === GameStates.JOINING ||
-  state.game.state === GameStates.ENDING;
-export const getGameRef = (state: HasGameState): string => state.game.gameRef;
-export const getGame = (state: HasGameState): Game => state.game.game;
-export const getCheckedCells = (state: HasGameState): HitsAndMisses =>
-  state.game.game._checkedCells;
-export const getShipsCells = (state: HasGameState): Coordinate[][] =>
-  state.game.game.getShips();
+import { GameState, HitsAndMisses } from "../../types/game.types";
+import { Game, Player } from "../logic/game";
+import { Ship } from "../logic/ship";
+import { Coordinate } from "../logic/types";
+
+export const getGameId = (state: HasGameState): string => state.game.id;
+export const getGame = (state: HasGameState): Game => state.game;
+export const player1 = (state: HasGameState): Player => state.game.players[0];
+export const player2 = (state: HasGameState): Player => state.game.players[1];
+export const isWaitingForOpponent = (state: HasGameState): boolean =>
+  state.game.players.length === 1;
+export const isGameStarted = (state: HasGameState): boolean =>
+  state.game.players.length === 2;
+export const player1HitsAndMisses = (state: HasGameState): HitsAndMisses =>
+  state.game.players[1].checkedCells;
+export const player2HitsAndMisses = (state: HasGameState): HitsAndMisses =>
+  state.game.players[0].checkedCells;
+
+export const player1Ships = (state: HasGameState): Coordinate[][] =>
+  state.game.players[0].board._ships.map((s) => s.calculatePoints());
+export const player2Ships = (state: HasGameState): Coordinate[][] =>
+  state.game.players[1].board._ships.map((s) => s.calculatePoints());

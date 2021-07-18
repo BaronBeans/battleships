@@ -1,10 +1,8 @@
-import React, { useState, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import styled from "styled-components";
-import { joinInProgressGame, startGame } from "../core/actions/game.actions";
-import { isInProgress, isLoading } from "../core/selectors/game.selectors";
-import { AppState } from "../core/store";
-import { Game } from "../components/Game/Game";
+import { auth } from "../utils/fire";
+import { Login } from "./Login";
+import firebase from "firebase";
 
 const AppContainer = styled.div`
   display: flex;
@@ -25,60 +23,113 @@ const AppContainer = styled.div`
 `;
 
 export const App = () => {
-  const [name, setName] = useState<string>("");
-  const [code, setCode] = useState<string>("");
-  const inProgress = useSelector<AppState, boolean>(isInProgress);
-  const loading = useSelector<AppState, boolean>(isLoading);
-  const dispatch = useDispatch();
+  const [user, setUser] = React.useState<firebase.User>(auth.currentUser);
+  const [loading, setLoading] = React.useState(true);
 
-  const createGame = async () => {
-    if (!name) return;
-    dispatch(startGame(name));
-  };
+  React.useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      setLoading(true);
+      if (user) {
+        setUser(user);
+        // localStorage.setItem("user", JSON.stringify(user))
+        // const userDetails = await getUserDetails(user);
 
-  const joinGame = async () => {
-    if (!code) return;
-    dispatch(joinInProgressGame(code));
-  };
+        // const userToken = await user.getIdToken(true);
+        // console.error(userToken);
+        setLoading(false);
+      } else {
+        setUser(null);
+        // localStorage.removeItem("user")
+        setLoading(false);
+      }
+    });
+  }, []);
 
-  if (loading) return <h1>Loading...</h1>;
+  if (loading) return <h1>Loading</h1>;
 
-  if (inProgress) {
+  if (user)
     return (
-      <AppContainer>
-        <Game />
-      </AppContainer>
+      <div>
+        <h1>{user.displayName}</h1>
+        <button onClick={() => auth.signOut()}>Sign out</button>
+      </div>
     );
-  }
 
-  return (
-    <AppContainer>
-      <h1>Battleships</h1>
-      <fieldset>
-        <legend>Create Game</legend>
-        <input
-          placeholder="name"
-          type="text"
-          value={name}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setName(e.target.value)
-          }
-        />
-        <button onClick={createGame}>Start New Online Game</button>
-        <button>Start New Game with a Bot</button>
-      </fieldset>
-      <fieldset>
-        <legend>Join Game</legend>
-        <input
-          placeholder="game code"
-          type="text"
-          value={code}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setCode(e.target.value)
-          }
-        />
-        <button onClick={joinGame}>Join Game</button>
-      </fieldset>
-    </AppContainer>
-  );
+  return <Login />;
+
+  // const [name, setName] = useState<string>("");
+  // const [joinName, setJoinName] = useState<string>("");
+  // const [code, setCode] = useState<string>("");
+  // const gameStarted = useSelector<AppState, boolean>(isGameStarted);
+  // const waitingForOpponent = useSelector<AppState, boolean>(
+  //   isWaitingForOpponent
+  // );
+  // const gameCode = useSelector<AppState, string>(getGameId);
+  // const dispatch = useDispatch();
+
+  // const createGame = async () => {
+  //   if (!name) return;
+  //   dispatch(addPlayerToGame(name, board1));
+  // };
+
+  // const joinGame = async () => {
+  //   if (!code || !joinName) return;
+  //   dispatch(joinGameInProgress(code, joinName, board2));
+  // };
+
+  // if (waitingForOpponent)
+  //   return (
+  //     <>
+  //       <h1>Loading...</h1>
+  //       <br />
+  //       <h3>{gameCode}</h3>
+  //     </>
+  //   );
+
+  // if (gameStarted) {
+  //   return (
+  //     <AppContainer>
+  //       <Game />
+  //     </AppContainer>
+  //   );
+  // }
+
+  // return (
+  //   <AppContainer>
+  //     <h1>Battleships</h1>
+  //     <fieldset>
+  //       <legend>Create Game</legend>
+  //       <input
+  //         placeholder="name"
+  //         type="text"
+  //         value={name}
+  //         onChange={(e: ChangeEvent<HTMLInputElement>) =>
+  //           setName(e.target.value)
+  //         }
+  //       />
+  //       <button onClick={createGame}>Start New Online Game</button>
+  //       {/* <button>Start New Game with a Bot</button> */}
+  //     </fieldset>
+  //     <fieldset>
+  //       <legend>Join Game</legend>
+  //       <input
+  //         placeholder="name"
+  //         type="text"
+  //         value={joinName}
+  //         onChange={(e: ChangeEvent<HTMLInputElement>) =>
+  //           setJoinName(e.target.value)
+  //         }
+  //       />
+  //       <input
+  //         placeholder="game code"
+  //         type="text"
+  //         value={code}
+  //         onChange={(e: ChangeEvent<HTMLInputElement>) =>
+  //           setCode(e.target.value)
+  //         }
+  //       />
+  //       <button onClick={joinGame}>Join Game</button>
+  //     </fieldset>
+  //   </AppContainer>
+  // );
 };

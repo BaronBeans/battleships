@@ -1,12 +1,13 @@
 import { Game } from "../core/logic/game";
 import { Coordinate } from "../core/logic/types";
 
-export interface GameState {
-  state: GameStates;
-  gameRef?: string;
+// export interface GameState {
+//   state: GameStates;
+//   gameRef?: string;
+//   data: Game;
+// }
 
-  game: Game;
-}
+export type GameState = Game;
 
 export enum GameStates {
   NOT_STARTED,

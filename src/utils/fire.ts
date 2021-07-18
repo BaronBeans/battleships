@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
+import "firebase/auth";
 
 export const config = {
   apiKey: process.env.API_KEY,
@@ -13,9 +14,11 @@ export const config = {
 
 const fire = firebase.initializeApp(config);
 export const db = fire.firestore();
+export const auth = fire.auth();
 // local test
 if (location.hostname === "localhost") {
   db.useEmulator("localhost", 8080);
+  auth.useEmulator("http://127.0.0.1:9099");
 }
 //
 db.enablePersistence().catch((err) => {

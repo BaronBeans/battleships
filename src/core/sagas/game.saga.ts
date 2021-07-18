@@ -1,65 +1,76 @@
-import { call, put, select, takeLatest } from "redux-saga/effects";
+import { call, put, select, takeLatest } from "@redux-saga/core/effects";
 import { db } from "../../utils/fire";
-import { exampleBoard, generateRandomBoard } from "../../utils/game.utils";
 import {
-  END_GAME,
-  gameEnded,
+  addGameToDatabase,
+  ADD_GAME,
+  ADD_PLAYER,
   JOIN_GAME,
-  setGameRef,
-  START_GAME,
+  overwriteGame,
 } from "../actions/game.actions";
 import { Game } from "../logic/game";
 import { getGame } from "../selectors/game.selectors";
+import { GameState } from "../../types/game.types";
 
-const addGameToDB = async (player1Name: string, game?: Game) => {
+const addGameToDB = async (game: Game) => {
   return await db.collection("games").add({
     inProgress: true,
     started: new Date(),
-    player1Name,
-    board: game || "",
+    state: JSON.parse(JSON.stringify(game)),
   });
 };
 
-const getGameFromDB = async (ref: string) => {
-  return await (await db.collection("games").doc(ref).get()).data();
+const getGameFromDB = async (code: string): Promise<Game> => {
+  const data = await db.collection("games").where("state.id", "==", code).get();
+  const game = await data.docs[0].data();
+  return game as Game;
 };
 
-// const getDataFromGame
-
-const removeGameFromDB = async (ref: string, game: any) => {
-  game.inProgress = false;
-  return await db
+const updateGame = async (code: string, game: Game): Promise<void> => {
+  const dbGame = await db
     .collection("games")
-    .doc(ref)
-    .set({
-      ...game,
-    });
+    .where("state.id", "==", code)
+    .get();
+  const dbGameId = dbGame.docs[0].id;
+  const result = await db
+    .collection("games")
+    .doc(dbGameId)
+    .update({
+      state: JSON.parse(JSON.stringify(game)),
+    })
+    .then((result) => console.log(result));
+  console.log(result);
 };
 
-export function* startNewGame({ payload }) {
+export function* addGame() {
   const game = yield select(getGame);
-  console.log(game);
-  const gameRef = yield call(addGameToDB, payload);
-  console.log(gameRef);
-  yield put(setGameRef(gameRef.id));
+  yield call(addGameToDB, game);
 }
 
-export function* joinInProgressGame({ payload }) {
-  const game = yield call(getGameFromDB, payload);
-  console.log(game);
-  yield put(setGameRef(JSON.stringify(game)));
+export function* addPlayer() {
+  const game: Game = yield select(getGame);
+  if (game.players.length === 2) {
+    return;
+  }
+  yield put(addGameToDatabase());
 }
 
-export function* endGame({ payload }) {
-  // const game = yield select(getGame);
-  const game = yield call(getGameFromDB, payload);
-  const result = yield call(removeGameFromDB, payload, game);
-  console.log(result);
-  yield put(gameEnded());
+export function* joinGame({ payload }) {
+  const { code, name, board } = payload;
+  console.log(`${code}-${name}-${JSON.stringify(board)}`);
+  const game = yield call(getGameFromDB, code);
+  console.log(game);
+  yield put(overwriteGame(game.state as Game));
+  const newGame = new Game(game.state).addPlayer(name, board);
+  console.log(newGame);
+  yield put(overwriteGame(newGame as Game));
+  // yield put(addPlayer2ToGame(name, board));
+  // yield put(addPlayerToGame(name, board));
+  // const newGame = yield select(getGame);
+  // yield call(updateGame, code, newGame);
 }
 
 export function* gameSaga() {
-  yield takeLatest(START_GAME, startNewGame);
-  yield takeLatest(JOIN_GAME, joinInProgressGame);
-  yield takeLatest(END_GAME, endGame);
+  yield takeLatest(ADD_PLAYER, addPlayer);
+  yield takeLatest(ADD_GAME, addGame);
+  yield takeLatest(JOIN_GAME, joinGame);
 }

@@ -1,11 +1,11 @@
 import { Coordinate, Orientation } from "./types";
 
 export class Ship {
-  private _start: Coordinate;
-  private _length: number;
-  private _orientation: Orientation;
-  private _pointsHit: Coordinate[] = [];
-  private _sunk: boolean = false;
+  public _start: Coordinate;
+  public _length: number;
+  public _orientation: Orientation;
+  public _pointsHit: Coordinate[] = [];
+  public _sunk: boolean = false;
 
   constructor(start: Coordinate, length: number, orientation: Orientation) {
     this._start = start;

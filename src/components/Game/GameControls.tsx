@@ -1,9 +1,6 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { endGame } from "../../core/actions/game.actions";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { AppState } from "../../core/store";
-import { getGameRef } from "../../core/selectors/game.selectors";
 
 const Container = styled.div`
   display: flex;
@@ -15,11 +12,11 @@ const Container = styled.div`
 `;
 
 export const GameControls = () => {
-  const gameRef = useSelector<AppState, string>(getGameRef);
+  // const gameRef = useSelector<AppState, string>(getGameRef);
   const dispatch = useDispatch();
 
   const endGameClick = (e: React.MouseEvent<HTMLInputElement>) => {
-    dispatch(endGame(gameRef));
+    // dispatch(endGame(gameRef));
   };
 
   return (

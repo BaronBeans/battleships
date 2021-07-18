@@ -31,4 +31,14 @@ export const ship3 = new Ship({ x: 8, y: 10 }, 3, Orientation.HORIZONTAL);
 
 export const board1 = new Board([ship1, ship2, ship3]);
 
-export const game1 = new Game("Sean", board1);
+export const ship4 = new Ship({ x: 7, y: 2 }, 5, Orientation.VERTICAL);
+export const ship5 = new Ship({ x: 4, y: 2 }, 5, Orientation.HORIZONTAL);
+export const ship6 = new Ship({ x: 10, y: 6 }, 3, Orientation.VERTICAL);
+
+export const board2 = new Board([ship4, ship4, ship5]);
+
+export const game1 = new Game();
+
+export const createGame = (player1Name: string, board: Board) => {
+  return new Game();
+};

@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { checkCell } from "../../core/actions/game.actions";
 
 export const CellStyle = styled.div<{
   row: number;
@@ -30,14 +29,15 @@ export interface CellProps {
   hit?: boolean;
   miss?: boolean;
   own?: boolean;
+  occupied: boolean;
 }
 
-export const Cell = ({ row, column, hit, miss, own }: CellProps) => {
+export const Cell = ({ row, column, hit, miss, own, occupied }: CellProps) => {
   const dispatch = useDispatch();
   const buttonClick = (e: React.MouseEvent<HTMLInputElement>) => {
     if (hit || miss) return;
     // console.log(`${row},${column}`);
-    dispatch(checkCell({ x: row, y: column }));
+    // dispatch(checkCell({ x: row, y: column }));
   };
 
   return (
@@ -45,9 +45,9 @@ export const Cell = ({ row, column, hit, miss, own }: CellProps) => {
       row={row}
       column={column}
       background={hit ? "red" : miss ? "blue" : ""}
-      cellBackground={own ? "black" : ""}
+      cellBackground={occupied ? "black" : ""}
     >
-      <button onClick={buttonClick}></button>
+      <button onClick={buttonClick} disabled={own}></button>
     </CellStyle>
   );
 };
