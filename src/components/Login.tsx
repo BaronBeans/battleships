@@ -61,6 +61,7 @@ export const Login = () => {
         />
       </div>
       <h1>Battleships</h1>
+      <h5>Sean Barnard 2021</h5>
       <div className="input-field">
         <input
           type="email"
