@@ -1,19 +1,15 @@
-import { ADD_PLAYER, OVERWRITE_GAME } from "../actions/game.actions";
-import { Game } from "../logic/game";
+import { ADD_PLAYER } from "../actions/game.actions";
+import { GameObject } from "../store";
 
-export const initialGameState: Game = new Game();
-
-export const gameReducer = (state: Game = initialGameState, action: any) => {
+export const initialGameState: GameObject = {} as GameObject;
+export const gameReducer = (
+  state: GameObject = initialGameState,
+  action: any
+) => {
   switch (action.type) {
     case ADD_PLAYER:
-      const newState = state.addPlayer(
-        action.payload.user,
-        action.payload.board
-      );
+      const newState = (state as GameObject).addPlayer(action.payload.player);
       return newState;
-    case OVERWRITE_GAME:
-      const exisitingGame = action.payload as Game;
-      return exisitingGame;
     default:
       return state;
   }

@@ -6,6 +6,7 @@ import firebase from "firebase";
 import { GamesList } from "./GamesList";
 import { useDispatch } from "react-redux";
 import { addPlayerToGame } from "../core/actions/game.actions";
+import { Player } from "../core/store";
 
 const AppContainer = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ export const App = () => {
 
   const createGame = async () => {
     if (!user) return;
+    dispatch(addPlayerToGame(new Player(user.displayName)));
     console.log(user);
   };
 
